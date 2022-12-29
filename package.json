@@ -1,0 +1,30 @@
+{
+  "name": "comment-swap",
+  "version": "0.0.1",
+  "description": "Injects code, markup and values from block comments into CSS, HTML or JavaScript",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richplastow/comment-swap.git"
+  },
+  "keywords": [
+    "comment",
+    "swap",
+    "comment-swap",
+    "transform",
+    "replace",
+    "substitute",
+    "inject"
+  ],
+  "author": "Rich Plastow",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/richplastow/comment-swap/issues"
+  },
+  "homepage": "https://github.com/richplastow/comment-swap#readme"
+}
