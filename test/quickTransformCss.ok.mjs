@@ -7,7 +7,16 @@ test('quickTransformCss() ok: No Comment Swaps', t => {
     t.is(quickTransformCss(boringSource, { returnNull:true }), null);
 });
 
-test('quickCss() ok: Literal', t => {
+test('quickTransformCss() ok: Object with toString()', t => {
+    const obj = {
+        toString() {
+            return '/* h2 =*/ h1 { color:/*blue=*/red }';
+        }
+    };
+    t.is(quickTransformCss(obj), ' h2 { color:blue }');
+});
+
+test('quickTransformCss() ok: Literal', t => {
     const literalAfter  = '/* h2 =*/ h1 { color:/*blue=*/red }';
     const literalBefore = ' h1/*=h2*/ { color:red /*= blue */}';
     const literalEmpty = 'article/*=*/ h2 { /*hullo*//*=*/color:blue }';
@@ -19,7 +28,7 @@ test('quickCss() ok: Literal', t => {
     t.is(quickTransformCss(literalEmpty), literalOk);
 });
 
-test('quickCss() ok: Ternary Literal', t => {
+test('quickTransformCss() ok: Ternary Literal', t => {
     const ternaryAlmostEmptyConditionLiteral = '/* \t\n ?*/ h1 /*= h2 */{ color:/* ?*/red/*=blue*/ }';
     const ternaryEmptyConditionLiteral = '/*?*/ h1 /*= h2 */{ color:/*?*/red/*=blue*/ }';
     const ternaryFalseyConditionLiteral = '/* falsey ?*/ h1 /*= h2 */{ color:blue }';
@@ -34,7 +43,7 @@ test('quickCss() ok: Ternary Literal', t => {
     t.is(quickTransformCss(ternaryTruthyConditionLiteral, { $:{ truthy:[] } }), ternaryOk);
 });
 
-test('quickCss() ok: Ternary Variable', t => {
+test('quickTransformCss() ok: Ternary Variable', t => {
     const ternaryEmptyConditionVariable =
         ' /* \t\n ?*/h1/*$ heading */ { color:/*?*/red/*$ shade */ }';
     const ternaryFalseyConditionVariable =
@@ -54,7 +63,7 @@ test('quickCss() ok: Ternary Variable', t => {
     t.is(quickTransformCss(ternaryVariableDoesNotExist, opts), ternaryOk);
 });
 
-test('quickCss() ok: Variable', t => {
+test('quickTransformCss() ok: Variable', t => {
     const variableAfter = '/* heading $*/ h1 { color:/*shade$*/red }';
     const variableBefore = ' h1/*$heading*/ { color:red /*$ shade */}';
     const variableNonesuch = '/* nonesuch $*/ h2 { color:blue /*$ nonesuch */}';
@@ -70,7 +79,7 @@ test('quickCss() ok: Variable', t => {
     t.is(quickTransformCss(variableNumeric, opts), variableOk);
 });
 
-test('quickCss() ok: CSS Selector', t => {
+test('quickTransformCss() ok: CSS Selector', t => {
     const comma1    = '/* h4, h3 =*/h1, h2   { color:red }';
     const comma1ok  = 'h4, h3   { color:red }';
     const comma2    = 'a,p/*=q*/{}';
@@ -127,7 +136,7 @@ test('quickCss() ok: CSS Selector', t => {
     t.is(quickTransformCss(pseudo3), pseudo3ok);
 });
 
-test('quickCss() ok: CSS Properties', t => {
+test('quickTransformCss() ok: CSS Properties', t => {
     const property1     = 'h1 { /* color =*/\f\nbackground-color \t\ :red }';
     const property1ok   = 'h1 { \f\ncolor \t\ :red }';
     const property2     = 'h1 {\r\tbackground-color\f\n/*=outline-color*/ :red }';
@@ -142,7 +151,7 @@ test('quickCss() ok: CSS Properties', t => {
     t.is(quickTransformCss(property3good), property3ok);
 });
 
-test('quickCss() ok: CSS Values', t => {
+test('quickTransformCss() ok: CSS Values', t => {
     const value1     = 'h1 { color:/* red =*/\fblue; top:0 }';
     const value1ok   = 'h1 { color:\fred; top:0 }';
     const value2     = 'h1 { color:rgb(1,2,3)/*= red */ }';
@@ -157,7 +166,7 @@ test('quickCss() ok: CSS Values', t => {
     t.is(quickTransformCss(value3good), value3ok);
 });
 
-test('quickCss() ok: @import', t => {
+test('quickTransformCss() ok: @import', t => {
     const import1opts = { $:{ urlAndMedia:'url("prod.css") print, screen' } };
     const import1     = '@import/* urlAndMedia $*/ url("dev.css") print;';
     const import2opts = { $:{ importUrl:'@import url("prod.css")' } };
@@ -171,7 +180,7 @@ test('quickCss() ok: @import', t => {
     t.is(quickTransformCss(import3, import3opts), importOk);
 });
 
-test('quickCss() ok: @media', t => {
+test('quickTransformCss() ok: @media', t => {
     const media1opts = { $:{ property:'min-width' } };
     const media1     = '@media screen and (/* property $*/min-height: 900px) { }';
     const media2opts = { $:{ value:'900px' } };
@@ -185,7 +194,7 @@ test('quickCss() ok: @media', t => {
     t.is(quickTransformCss(media3, media3opts), mediaOk);
 });
 
-test('quickCss() ok: remove comments', t => {
+test('quickTransformCss() ok: remove comments', t => {
     const comments   = 'h1 { color:green /*?*//* green means go *//*=*/}';
     const commentsOk = 'h1 { color:green }';
     t.is(quickTransformCss(comments), commentsOk);

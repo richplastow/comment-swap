@@ -1,5 +1,5 @@
-const test = require('ava');
-const quickTransformJs = require('../dist/cjs').quickTransformJs;
+import test from 'ava';
+import { quickTransformJs } from '../dist/es/index.js';
 
 test('quickTransformJs() error: Literal After', t => {
     const literalAfterAtEnd = 'abc /* def =*/';
