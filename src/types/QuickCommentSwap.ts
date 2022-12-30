@@ -24,13 +24,13 @@ export default class QuickCommentSwap {
         this.swapEnd = this.commentEnd;
 
         // If the previous Comment Swap was a Ternary Condition, then this should
-        // be either a Literal Before or a Variable Before Comment Swap. The 
+        // be either a Literal Before or a Variable Before Comment Swap. The
         // Ternary Condition will have already read the replacement source inside
         // this Comment Swap (if the condition is false), so we actually don’t
         // want this Comment Swap to contribute anything to the processed source.
         if (prevKind === CSKind.TernaryCondition) {
             this.replacement = '';
-            return;            
+            return;
         }
 
         switch (this.kind) {
@@ -282,7 +282,7 @@ function prepareReplacementTernary(
     const len = source.length;
 
     // Throw an exception if this Ternary Condition ends the source code,
-    // or is the last Comment Swap. 
+    // or is the last Comment Swap.
     if (commentEnd === len)
         throw Error(`A 'TernaryCondition' Comment Swap is at end of source`);
     if (nextCS === null)

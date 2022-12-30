@@ -3,7 +3,7 @@
 // At least one of these will be present in CSS or JS which uses Comment Swaps.
 export function sourceContainsCssJsCommentSwap(
     source: string
-): Boolean {
+): boolean {
     for (const str of ['/*=', '=*/', '/*$', '$*/', '?*/'])
         if (source.indexOf(str) !== -1)
             return true;
@@ -15,7 +15,7 @@ export function sourceContainsCssJsCommentSwap(
 // At least one of these will be present in HTML which uses Comment Swaps.
 export function sourceContainsHtmlCommentSwap(
     source: string
-): Boolean {
+): boolean {
     for (const str of ['<!--=', '=-->', '<!--$', '$-->', '?-->'])
         if (source.indexOf(str) !== -1)
             return true;

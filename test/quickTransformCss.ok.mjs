@@ -132,7 +132,7 @@ test('quickCss() ok: CSS Properties', t => {
     const property1ok   = 'h1 { \f\ncolor \t\ :red }';
     const property2     = 'h1 {\r\tbackground-color\f\n/*=outline-color*/ :red }';
     const property2ok   = 'h1 {\r\toutline-color\f\n :red }';
-    const property3bad  = 'h1 {/*?*/background/*=\toutline*/-color:red }'; // browsers do not display this 
+    const property3bad  = 'h1 {/*?*/background/*=\toutline*/-color:red }'; // browsers do not display this
     const property3good = 'h1 {/*?*/background-color/*=\toutline-color*/:red }'; // this is the proper syntax
     const property3ok   = 'h1 {\toutline-color:red }';
 
