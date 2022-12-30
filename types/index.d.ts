@@ -1,3 +1,4 @@
 export interface CommentSwapOptions {
-    $?: Object
+    returnNull?: boolean;
+    $?: Object;
 }
