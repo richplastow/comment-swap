@@ -1,4 +1,3 @@
-
 // Tests whether `source` contains at least one of the following five strings:
 //     /*=   =*/   /*$   $*/   ?*/
 // At least one of these will be present in CSS or JS which uses Comment Swaps.

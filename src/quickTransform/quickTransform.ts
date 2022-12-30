@@ -17,9 +17,9 @@ export default function quickTransform(
     let pos = 0;
     const len = source.length;
 
-    // Traverse the source source. Fully parsing it into an AST is usually overkill,
+    // Traverse the source code. Fully parsing it into an AST is usually overkill,
     // and (I guess) would be slower.
-    // Setting the `quick` option to `false` runs slow (but robust) AST processing. @TODO
+    // @TODO slowTransform(), for more robust AST processing, which catches edge cases.
     while (pos < len) {
 
         // Get the start position of the next multiline comment.
@@ -118,7 +118,7 @@ export default function quickTransform(
         source.slice(0, commentSwaps[0].swapBegin), // before the first Comment Swap
     ];
 
-    // Rebuild the source source using each Comment Swap's replacement value.
+    // Rebuild the source code using each Comment Swap's replacement value.
     for (let i=0, len=commentSwaps.length; i<len; i++) {
 
         // Append this Comment Swap's replacement source.

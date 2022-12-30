@@ -13,15 +13,12 @@ export default {
       {
         format: 'cjs',
         file: pkg.main,
-        exports: 'named',
         sourcemap: true
       },
       {
         format: 'es',
         file: pkg.module,
-        plugins: [
-          emitModulePackageFile()
-        ],
+        plugins: [ emitModulePackageFile() ],
         sourcemap: true
       },
     ],

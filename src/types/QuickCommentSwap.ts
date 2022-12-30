@@ -121,9 +121,7 @@ function prepareReplacementAfter(
         case Filetype.Html:
             for (; pos<len; pos++) {
                 const c = source[pos];
-                if (c === '<' || // eg @TODO example
-                    c === '>'    // eg @TODO example
-                ) break;
+                if (c === '<') break; // eg <div><!-- Hi =-->Hello</div> -> <div>Hi</div>
             }
             break;
         case Filetype.Js:
@@ -218,9 +216,7 @@ function prepareReplacementBefore(
         case Filetype.Html:
             for (; pos>-1; pos--) {
                 const c = source[pos];
-                if (c === '<' || // eg @TODO example
-                    c === '>'    // eg @TODO example
-                ) break;
+                if (c === '>') break; // eg <div>Hello<!--= Hi --></div> -> <div>Hi</div>
             }
             break;
         case Filetype.Js:
@@ -267,7 +263,7 @@ function prepareReplacementBefore(
 
     // The replacement source is the value followed by any preserved whitespace.
     // In the edge case where the variable is missing from `opts.$`, keep the
-    // original source source the way it was.
+    // original source code the way it was.
     const replacement = typeof value !== 'undefined'
         ? value + source.slice(preservedSpaceBegin, commentBegin)
         : source.slice(swapBegin, commentBegin);
